@@ -8,6 +8,7 @@ window.ASF.content = {
   places: [
     {
       id: "gandhi",
+      shortName: { fr: "Gandhi", ru: "Ганди" },
       lat: 43.2438034,
       lng: 76.8975794,
       osm: "https://www.openstreetmap.org/node/1020229784",
@@ -56,6 +57,7 @@ window.ASF.content = {
     },
     {
       id: "chevtchenko",
+      shortName: { fr: "Chevtchenko", ru: "Шевченко" },
       lat: 43.2471283,
       lng: 76.9567542,
       osm: "https://www.openstreetmap.org/node/9922628914",
@@ -104,6 +106,7 @@ window.ASF.content = {
     },
     {
       id: "tsoi",
+      shortName: { fr: "Tsoï", ru: "Цой" },
       lat: 43.2497481,
       lng: 76.9491588,
       osm: "https://www.openstreetmap.org/node/9721566077",
@@ -152,6 +155,7 @@ window.ASF.content = {
     },
     {
       id: "pouchkine",
+      shortName: { fr: "Pouchkine", ru: "Пушкин" },
       lat: 43.2461279,
       lng: 76.9542626,
       osm: "https://www.openstreetmap.org/node/12464229134",
@@ -200,6 +204,7 @@ window.ASF.content = {
     },
     {
       id: "tselinny",
+      shortName: { fr: "Tselinny", ru: "Tselinny" },
       lat: 43.2484519,
       lng: 76.9291451,
       osm: "https://www.openstreetmap.org/way/27320455",
@@ -248,6 +253,7 @@ window.ASF.content = {
     },
     {
       id: "musee",
+      shortName: { fr: "Musée", ru: "Музей" },
       lat: 43.2271753,
       lng: 76.9490333,
       osm: "https://www.openstreetmap.org/way/1348663141",
@@ -386,7 +392,30 @@ window.ASF.content = {
         "Élaboration d’un audioguide bilingue."
       ],
       valueTitle: "Utilité du projet",
-      value: "Le mini-guide permet de découvrir six lieux d’Almaty sous un angle culturel. Il réunit des informations bilingues, une carte interactive et un audioguide dans un seul espace numérique. Il peut servir de ressource éducative pour les élèves et de support de découverte pour les habitants et les visiteurs."
+      value: "Le mini-guide permet de découvrir six lieux d’Almaty sous un angle culturel. Il réunit des informations bilingues, une carte interactive et un audioguide dans un seul espace numérique. Il peut servir de ressource éducative pour les élèves et de support de découverte pour les habitants et les visiteurs.",
+      statsLabel: "Le projet en chiffres",
+      /* [singular, plural] */
+      stats: {
+        places: ["lieu", "lieux"],
+        languages: ["langue", "langues"],
+        audio: ["enregistrement audio", "enregistrements audio"],
+        sources: ["source", "sources"]
+      },
+      timelineTitle: "De 1964 à 2025",
+      timelineIntro: "Les six lieux racontent soixante ans de l’histoire culturelle d’Almaty. Faites défiler la frise et choisissez un événement.",
+      timelineOpen: "Voir le lieu",
+      timelinePrev: "Événements précédents",
+      timelineNext: "Événements suivants",
+      resultsTitle: "Résultats du projet",
+      results: {
+        places: { title: "Six récits bilingues", text: "Une page par lieu, en français et en russe.", link: "Les lieux" },
+        map: { title: "Une carte interactive", text: "Itinéraire à pied et lieux utiles sur le trajet.", link: "La carte" },
+        audio: { title: "Un audioguide", text: "Douze enregistrements, en français et en russe.", link: "L’audioguide" }
+      },
+      sourcesIntro: "Filtrez les sources par lieu.",
+      sourcesAll: "Toutes",
+      sourcesMap: "Carte",
+      sourcesFilterLabel: "Filtrer les sources"
     },
     ru: {
       title: "О проекте",
@@ -405,13 +434,83 @@ window.ASF.content = {
         "Подготовка двуязычного аудиогида."
       ],
       valueTitle: "Практическая значимость проекта",
-      value: "Мини-гид позволяет познакомиться с шестью местами Алматы с культурной точки зрения. Он объединяет двуязычную информацию, интерактивную карту и аудиогид в одном цифровом пространстве. Он может использоваться как образовательный ресурс для школьников и как путеводитель для жителей и гостей города."
+      value: "Мини-гид позволяет познакомиться с шестью местами Алматы с культурной точки зрения. Он объединяет двуязычную информацию, интерактивную карту и аудиогид в одном цифровом пространстве. Он может использоваться как образовательный ресурс для школьников и как путеводитель для жителей и гостей города.",
+      statsLabel: "Проект в цифрах",
+      /* [1 место, 2 места, 5 мест] */
+      stats: {
+        places: ["место", "места", "мест"],
+        languages: ["язык", "языка", "языков"],
+        audio: ["аудиозапись", "аудиозаписи", "аудиозаписей"],
+        sources: ["источник", "источника", "источников"]
+      },
+      timelineTitle: "С 1964 по 2025 год",
+      timelineIntro: "Шесть мест рассказывают о шестидесяти годах культурной истории Алматы. Прокрутите ленту и выберите событие.",
+      timelineOpen: "Открыть место",
+      timelinePrev: "Предыдущие события",
+      timelineNext: "Следующие события",
+      resultsTitle: "Результаты проекта",
+      results: {
+        places: { title: "Шесть двуязычных историй", text: "Страница о каждом месте на французском и русском языках.", link: "Места" },
+        map: { title: "Интерактивная карта", text: "Пеший маршрут и полезные места по пути.", link: "Карта" },
+        audio: { title: "Аудиогид", text: "Двенадцать записей на французском и русском языках.", link: "Аудиогид" }
+      },
+      sourcesIntro: "Отфильтруйте источники по месту.",
+      sourcesAll: "Все",
+      sourcesMap: "Карта",
+      sourcesFilterLabel: "Фильтр источников"
     }
   },
+
+  /* Key dates of the six places, all taken from the stories and the sources
+     listed on the research page. */
+  timeline: [
+    {
+      year: "1964", place: "tselinny",
+      fr: "Construction du cinéma Tselinny",
+      ru: "Построен кинотеатр «Целинный»"
+    },
+    {
+      year: "1999", place: "pouchkine",
+      fr: "Inauguration du buste d’Alexandre Pouchkine, le 29 octobre",
+      ru: "29 октября открыт бюст Александра Пушкина"
+    },
+    {
+      year: "2000", place: "chevtchenko",
+      fr: "Inauguration du monument de Taras Chevtchenko, en août",
+      ru: "В августе открыт памятник Тарасу Шевченко"
+    },
+    {
+      year: "2003", place: "gandhi",
+      fr: "Inauguration du monument du Mahatma Gandhi, en octobre",
+      ru: "В октябре открыт памятник Махатме Ганди"
+    },
+    {
+      year: "2018", place: "tsoi",
+      fr: "Inauguration du monument de Viktor Tsoï, le 21 juin",
+      ru: "21 июня открыт памятник Виктору Цою"
+    },
+    {
+      /* Shows the sculpture's own photo and opens its part of the museum page. */
+      year: "2023", place: "musee", photo: "nades", anchor: "nades",
+      fr: "Jaume Plensa réalise la sculpture NADES",
+      ru: "Жауме Пленса создаёт скульптуру NADES"
+    },
+    {
+      year: "2025", place: "tselinny",
+      fr: "Ouverture du centre de culture contemporaine Tselinny, le 5 septembre",
+      ru: "5 сентября открывается центр современной культуры Tselinny"
+    },
+    {
+      year: "2025", place: "musee",
+      fr: "Ouverture de l’Almaty Museum of Arts, le 12 septembre",
+      ru: "12 сентября открывается Almaty Museum of Arts"
+    }
+  ],
 
   sources: [
     {
       href: "https://e-history.kz/ru/kazakhstanika/show/10635",
+      place: "gandhi",
       label: {
         fr: "Qazaqstan Tarihy — « ПАМЯТНИК ИНДИЙСКОМУ ПОЛИТИЧЕСКОМУ ДЕЯТЕЛЮ МАХАТМЕ ГАНДИ »",
         ru: "Qazaqstan Tarihy — «ПАМЯТНИК ИНДИЙСКОМУ ПОЛИТИЧЕСКОМУ ДЕЯТЕЛЮ МАХАТМЕ ГАНДИ»"
@@ -419,6 +518,7 @@ window.ASF.content = {
     },
     {
       href: "https://e-history.kz/ru/kazakhstanika/show/10649",
+      place: "chevtchenko",
       label: {
         fr: "Qazaqstan Tarihy — « ПАМЯТНИК Т. ШЕВЧЕНКО »",
         ru: "Qazaqstan Tarihy — «ПАМЯТНИК Т. ШЕВЧЕНКО»"
@@ -426,6 +526,7 @@ window.ASF.content = {
     },
     {
       href: "https://ru.ruwiki.ru/wiki/%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE_(%D0%90%D0%BB%D0%BC%D0%B0-%D0%90%D1%82%D0%B0)",
+      place: "chevtchenko",
       label: {
         fr: "Рувики — « Улица Шевченко (Алма-Ата) » (sculpteurs dirigés par Vitali Ryjik)",
         ru: "Рувики — «Улица Шевченко (Алма-Ата)» (группа скульпторов под руководством Виталия Рыжика)"
@@ -433,6 +534,7 @@ window.ASF.content = {
     },
     {
       href: "https://e-history.kz/ru/kazakhstanika/show/10653",
+      place: "pouchkine",
       label: {
         fr: "Qazaqstan Tarihy — « ПАМЯТНИК-БЮСТ А.С. ПУШКИНУ »",
         ru: "Qazaqstan Tarihy — «ПАМЯТНИК-БЮСТ А.С. ПУШКИНУ»"
@@ -440,6 +542,7 @@ window.ASF.content = {
     },
     {
       href: "https://e-history.kz/en/calendar/show/27727",
+      place: "pouchkine",
       label: {
         fr: "Qazaqstan Tarihy — « In 1999 a monument to the great Russian poet Pushkin was installed in Almaty »",
         ru: "Qazaqstan Tarihy — «In 1999 a monument to the great Russian poet Pushkin was installed in Almaty»"
@@ -447,6 +550,7 @@ window.ASF.content = {
     },
     {
       href: "https://www.almaty.art/en/news/almaty-museum-of-arts-opens-on-12-september-2025",
+      place: "musee",
       label: {
         fr: "Almaty Museum of Arts — page du musée sur l’ouverture",
         ru: "Almaty Museum of Arts — страница музея об открытии"
@@ -454,6 +558,7 @@ window.ASF.content = {
     },
     {
       href: "https://www.almaty.art/visit-and-tickets",
+      place: "musee",
       label: {
         fr: "Almaty Museum of Arts — adresse officielle",
         ru: "Almaty Museum of Arts — официальный адрес"
@@ -461,6 +566,7 @@ window.ASF.content = {
     },
     {
       href: "https://www.chapmantaylor.com/projects/almaty-museum-of-art",
+      place: "musee",
       label: {
         fr: "Chapman Taylor — « Almaty Museum of Arts »",
         ru: "Chapman Taylor — «Almaty Museum of Arts»"
@@ -468,6 +574,7 @@ window.ASF.content = {
     },
     {
       href: "https://www.tselinny.org/en/building",
+      place: "tselinny",
       label: {
         fr: "Tselinny — « Building »",
         ru: "Tselinny — «Building»"
@@ -475,6 +582,7 @@ window.ASF.content = {
     },
     {
       href: "https://vlast.kz/english/66508-tselinny-reopens-its-doors.html",
+      place: "tselinny",
       label: {
         fr: "Vlast — « Tselinny reopens its doors », 2025 (cinéma construit en 1964, ouverture le 5 septembre 2025)",
         ru: "Vlast — «Tselinny reopens its doors», 2025 (кинотеатр построен в 1964 году, открытие 5 сентября 2025 года)"
@@ -482,6 +590,7 @@ window.ASF.content = {
     },
     {
       href: "https://www.zakon.kz/sobytiia/6414634-kak-izmenilsya-park-gandi-v-almaty.html",
+      place: "gandhi",
       label: {
         fr: "Zakon.kz — « Как изменился парк Ганди в Алматы », 21 novembre 2023",
         ru: "Zakon.kz — «Как изменился парк Ганди в Алматы», 21 ноября 2023"
@@ -489,6 +598,7 @@ window.ASF.content = {
     },
     {
       href: "https://jaumeplensa.com/works-and-projects/public-space/nades",
+      place: "musee",
       label: {
         fr: "Jaume Plensa — « NADES, 2023 »",
         ru: "Жауме Пленса — «NADES, 2023»"
@@ -496,6 +606,7 @@ window.ASF.content = {
     },
     {
       href: "https://www.zakon.kz/kultura-shoubiz/4924597-pamyatnik-viktoru-tsoyu-otkryli-v-almaty.html",
+      place: "tsoi",
       label: {
         fr: "Zakon.kz — « Памятник Виктору Цою открыли в Алматы », 21 juin 2018",
         ru: "Zakon.kz — «Памятник Виктору Цою открыли в Алматы», 21 июня 2018"
@@ -503,6 +614,7 @@ window.ASF.content = {
     },
     {
       href: "https://vlast.kz/kz/novosti/28430-v-almaty-ustanovili-pamatnik-viktoru-cou.html",
+      place: "tsoi",
       label: {
         fr: "Vlast — « В Алматы установили памятник Виктору Цою », 21 juin 2018",
         ru: "Vlast — «В Алматы установили памятник Виктору Цою», 21 июня 2018"
@@ -510,6 +622,7 @@ window.ASF.content = {
     },
     {
       href: "https://www.openstreetmap.org/node/1020229784",
+      place: "gandhi",
       label: {
         fr: "OpenStreetMap — monument du Mahatma Gandhi, nœud 1020229784",
         ru: "OpenStreetMap — памятник Махатме Ганди, точка 1020229784"
@@ -517,6 +630,7 @@ window.ASF.content = {
     },
     {
       href: "https://www.openstreetmap.org/node/9922628914",
+      place: "chevtchenko",
       label: {
         fr: "OpenStreetMap — monument de Taras Chevtchenko, nœud 9922628914",
         ru: "OpenStreetMap — памятник Тарасу Шевченко, точка 9922628914"
@@ -524,6 +638,7 @@ window.ASF.content = {
     },
     {
       href: "https://www.openstreetmap.org/node/9721566077",
+      place: "tsoi",
       label: {
         fr: "OpenStreetMap — monument de Viktor Tsoï, nœud 9721566077",
         ru: "OpenStreetMap — памятник Виктору Цою, точка 9721566077"
@@ -531,6 +646,7 @@ window.ASF.content = {
     },
     {
       href: "https://www.openstreetmap.org/node/12464229134",
+      place: "pouchkine",
       label: {
         fr: "OpenStreetMap — buste d’Alexandre Pouchkine, nœud 12464229134",
         ru: "OpenStreetMap — бюст Александра Пушкина, точка 12464229134"
@@ -538,6 +654,7 @@ window.ASF.content = {
     },
     {
       href: "https://www.openstreetmap.org/way/27320455",
+      place: "tselinny",
       label: {
         fr: "OpenStreetMap — Tselinny, 59 rue Masanchi, voie 27320455",
         ru: "OpenStreetMap — Tselinny, улица Масанчи, 59, линия 27320455"
@@ -545,6 +662,7 @@ window.ASF.content = {
     },
     {
       href: "https://www.openstreetmap.org/way/1348663141",
+      place: "musee",
       label: {
         fr: "OpenStreetMap — Almaty Museum of Arts, avenue Al-Farabi, voie 1348663141",
         ru: "OpenStreetMap — Almaty Museum of Arts, проспект Аль-Фараби, линия 1348663141"
@@ -552,6 +670,7 @@ window.ASF.content = {
     },
     {
       href: "https://www.openstreetmap.org/copyright",
+      place: "map",
       label: {
         fr: "OpenStreetMap (Overpass API) — cafés, points d’eau, bancs, parcs, toilettes et arrêts du centre d’Almaty, données au 26/10/2026",
         ru: "OpenStreetMap (Overpass API) — кафе, питьевая вода, скамейки, парки, туалеты и остановки в центре Алматы, данные на 26.10.2026"

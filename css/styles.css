@@ -1597,28 +1597,388 @@ main {
   padding-bottom: 4.5rem;
 }
 
+/* ---- Research page ---- */
+
+/* Section headings, a step below the page title. */
+.research h2 {
+  margin: 0 0 0.9rem;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+}
+
+.research-lead {
+  max-width: var(--measure);
+  margin: 0;
+  font-size: clamp(1.1rem, 1.6vw, 1.25rem);
+  line-height: 1.7;
+}
+
+.research-text {
+  margin-top: 2rem;
+}
+
+/* The project in figures. */
+.research-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.research-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--beige);
+  border-radius: 14px;
+  background: var(--white);
+}
+
+.research-stat-number {
+  font: 500 clamp(2.2rem, 4.5vw, 3rem)/1 var(--serif);
+  color: var(--burgundy);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.research-stat-label {
+  color: #5b524b;
+  font-size: 0.92rem;
+  line-height: 1.3;
+}
+
+/* Timeline: a horizontal, scrollable strip of cards on wide screens. */
+.research-timeline {
+  margin-top: 3rem;
+}
+
+.timeline-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.timeline-intro {
+  max-width: var(--measure);
+  margin: 0 0 1rem;
+  color: #5b524b;
+}
+
+.timeline-nav {
+  display: flex;
+  gap: 0.45rem;
+  margin-bottom: 0.9rem;
+}
+
+.timeline-arrow {
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--burgundy);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--burgundy);
+  font: 600 1.1rem/1 var(--sans);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.timeline-arrow:hover {
+  background: var(--burgundy);
+  color: var(--ivory);
+}
+
+.timeline-track {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(13rem, 15rem);
+  gap: 1rem;
+  margin: 0;
+  padding: 0.4rem 0.2rem 1.2rem;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rose) transparent;
+}
+
+.timeline-item {
+  position: relative;
+  scroll-snap-align: start;
+}
+
+/* The line through the dots, one segment per event (reaching across the
+   gap to the next one), so it continues while the strip scrolls. */
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  top: calc(2.55rem - 1px);
+  left: 0;
+  right: -1rem;
+  height: 2px;
+  background: var(--rose);
+}
+
+.timeline-item:last-child::before {
+  right: 0;
+}
+
+.timeline-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: var(--charcoal);
+  text-decoration: none;
+}
+
+.timeline-year {
+  font: 500 1.6rem/1 var(--serif);
+  color: var(--burgundy);
+}
+
+.timeline-dot {
+  position: relative;
+  width: 0.9rem;
+  height: 0.9rem;
+  margin: 0.5rem 0 0.9rem;
+  border-radius: 50%;
+  background: var(--burgundy);
+  box-shadow: 0 0 0 4px var(--ivory);
+  transition: transform 0.2s ease;
+}
+
+.timeline-photo {
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--beige);
+}
+
+.timeline-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.timeline-text {
+  margin: 0.7rem 0 0.4rem;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.timeline-open {
+  margin-top: auto;
+  color: var(--burgundy);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.timeline-card:hover .timeline-photo img,
+.timeline-card:focus-visible .timeline-photo img {
+  transform: scale(1.05);
+}
+
+.timeline-card:hover .timeline-dot,
+.timeline-card:focus-visible .timeline-dot {
+  transform: scale(1.35);
+}
+
+.timeline-card:hover .timeline-open {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* Methods as numbered steps joined by a line. */
 .research-block {
   background: var(--white);
   border: 1px solid var(--beige);
-  padding: 1.2rem 1.3rem 0.4rem;
-  margin: 1.5rem 0;
+  padding: clamp(1.1rem, 2.5vw, 1.8rem);
+  margin: 3rem 0 0;
 }
 
-.research-block h2,
-.sources h2 {
-  margin: 0 0 0.8rem;
-  font-family: var(--serif);
-  font-size: 1.8rem;
-  font-weight: 500;
+.method-steps {
+  position: relative;
+  display: grid;
+  gap: 0.9rem;
+  margin: 0.4rem 0 0;
+  padding: 0;
+  list-style: none;
 }
 
-.research-block ul {
-  margin: 0 0 1rem;
-  padding-left: 1.2rem;
+.method-steps::before {
+  content: "";
+  position: absolute;
+  top: 1rem;
+  bottom: 1rem;
+  left: 1.05rem;
+  width: 2px;
+  background: var(--beige);
 }
 
+.method-step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.method-number {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--burgundy);
+  color: var(--ivory);
+  box-shadow: 0 0 0 4px var(--white);
+  font: 700 0.9rem/1 var(--sans);
+}
+
+.method-step p {
+  margin: 0;
+}
+
+/* Results: three cards linking to what the project produced. */
+.research-results {
+  margin-top: 3rem;
+}
+
+.result-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.result-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.2rem;
+  border: 1px solid var(--beige);
+  border-radius: 14px;
+  background: var(--white);
+  color: var(--charcoal);
+  text-decoration: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.result-card:hover,
+.result-card:focus-visible {
+  border-color: var(--burgundy);
+  box-shadow: 0 10px 26px rgba(104, 31, 50, 0.12);
+  transform: translateY(-2px);
+}
+
+.result-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  margin-bottom: 0.4rem;
+  border-radius: 12px;
+  background: #f3ebe3;
+  color: var(--burgundy);
+}
+
+.result-icon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.research .result-card h3 {
+  margin: 0;
+  font: 500 1.4rem/1.2 var(--serif);
+}
+
+.result-card p {
+  margin: 0;
+  color: #5b524b;
+  font-size: 0.95rem;
+}
+
+.result-link {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  color: var(--burgundy);
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+/* Practical value: a quiet burgundy callout. */
+.research-value {
+  margin-top: 3rem;
+  padding: clamp(1.1rem, 2.5vw, 1.8rem);
+  border-left: 4px solid var(--burgundy);
+  border-radius: 0 14px 14px 0;
+  background: #f3ebe3;
+}
+
+.research-value p {
+  max-width: var(--measure);
+  margin: 0;
+}
+
+/* Sources, with filters by place. */
 .sources {
-  margin-top: 2.4rem;
+  margin-top: 3rem;
+}
+
+.sources-intro {
+  margin: 0 0 0.9rem;
+  color: #5b524b;
+}
+
+.source-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.2rem;
+}
+
+.source-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.5rem;
+  padding: 0.3rem 0.5rem 0.3rem 0.85rem;
+  border: 1px solid var(--beige);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--charcoal);
+  font: 500 0.9rem/1.2 var(--sans);
+  cursor: pointer;
+}
+
+.source-filter:hover {
+  border-color: var(--burgundy);
+}
+
+.source-filter[aria-pressed="true"] {
+  border-color: var(--burgundy);
+  background: var(--burgundy);
+  color: var(--ivory);
+}
+
+.source-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: var(--ivory);
+  color: var(--burgundy);
+  font-size: 0.78rem;
+  font-weight: 700;
 }
 
 .source-list {
@@ -1627,11 +1987,39 @@ main {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.6rem;
+}
+
+.source-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem 0.7rem;
+  padding: 0.75rem 0.95rem;
+  border: 1px solid var(--beige);
+  border-radius: 12px;
+  background: var(--white);
+}
+
+.source-tag {
+  flex: 0 0 auto;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  background: #f3ebe3;
+  color: var(--burgundy);
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .source-list a {
+  flex: 1 1 18rem;
+  min-width: 0;
   font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.source-item .source-note {
+  flex-basis: 100%;
 }
 
 .site-footer {
@@ -1899,6 +2287,89 @@ main {
     font-size: 0.8rem;
   }
 
+  /* Research page on phones. */
+  .research-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+
+  .result-cards {
+    grid-template-columns: 1fr;
+  }
+
+  /* Timeline becomes vertical: line on the left, small photo, then text. */
+  .timeline-nav {
+    display: none;
+  }
+
+  .timeline-track {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    gap: 1.1rem;
+    padding: 0.2rem 0 0;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .timeline-item::before {
+    top: 0.6rem;
+    bottom: -1.1rem;
+    left: 0.4rem;
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+
+  .timeline-item:last-child::before {
+    bottom: auto;
+    height: 0;
+  }
+
+  .timeline-card {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    grid-template-areas:
+      "photo year"
+      "photo text"
+      "photo open";
+    column-gap: 0.9rem;
+    align-items: start;
+    padding-left: 1.6rem;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    top: 0.3rem;
+    left: 0;
+    margin: 0;
+  }
+
+  .timeline-year {
+    grid-area: year;
+    font-size: 1.4rem;
+  }
+
+  .timeline-photo {
+    grid-area: photo;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+  }
+
+  .timeline-text {
+    grid-area: text;
+    margin: 0.25rem 0 0.2rem;
+    font-size: 0.92rem;
+  }
+
+  .timeline-open {
+    grid-area: open;
+    font-size: 0.85rem;
+  }
+
+  .source-item {
+    padding: 0.65rem 0.8rem;
+  }
+
   /* Audioguide on phones: the photo becomes a wide banner above the story. */
   .audio-entry {
     grid-template-columns: 1fr;
@@ -1927,7 +2398,11 @@ main {
   .map-dock,
   .dock-btn,
   .audio-photo img,
-  .read-more-chevron {
+  .read-more-chevron,
+  .timeline-photo img,
+  .timeline-dot,
+  .result-card,
+  .timeline-arrow {
     transition: none;
   }
 

@@ -337,6 +337,51 @@
     main.append(section);
   }
 
+  /* "21 источник / 22 источника / 25 источников", "1 lieu / 6 lieux". */
+  function plural(forms, count) {
+    if (forms.length === 2) return count > 1 ? forms[1] : forms[0];
+    const ten = count % 10;
+    const hundred = count % 100;
+    if (ten === 1 && hundred !== 11) return forms[0];
+    if (ten >= 2 && ten <= 4 && (hundred < 12 || hundred > 14)) return forms[1];
+    return forms[2];
+  }
+
+  /* Figures count up from zero the first time they come into view: once
+     per visit, not again when the page is rebuilt for the other language. */
+  function countUp(nodes) {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce || ASF.statsCounted || !("IntersectionObserver" in window)) return;
+    ASF.statsCounted = true;
+    nodes.forEach(function (node) {
+      node.textContent = "0";
+    });
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        const node = entry.target;
+        const target = Number(node.getAttribute("data-count"));
+        const start = performance.now();
+        function step(now) {
+          const progress = Math.min(1, (now - start) / 900);
+          node.textContent = String(Math.round(target * (1 - Math.pow(1 - progress, 3))));
+          if (progress < 1) window.requestAnimationFrame(step);
+        }
+        window.requestAnimationFrame(step);
+      });
+    }, { threshold: 0.6 });
+    nodes.forEach(function (node) {
+      observer.observe(node);
+    });
+  }
+
+  const researchIcons = {
+    places: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.4 7-12a7 7 0 0 0-14 0c0 5.6 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg>',
+    map: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 4v13.5M15 6.5V20" fill="none" stroke="currentColor" stroke-width="2"/></svg>',
+    audio: headphonesIcon
+  };
+
   function renderResearch() {
     const lang = ASF.lang();
     const ui = ASF.ui();
@@ -345,33 +390,164 @@
     main.replaceChildren();
     const section = ASF.el("section", "section research");
     const wrap = ASF.el("div", "wrap");
-    wrap.append(ASF.el("p", "eyebrow", ui.nav[4].label));
-    const prose = ASF.el("div", "prose");
-    prose.append(ASF.el("h1", "page-title", research.title));
-    prose.append(ASF.el("p", "research-author", ui.author));
-    paragraphs(prose, research.paragraphs);
+
+    /* Opening: title, author and the first paragraph as a lead. */
+    const intro = ASF.el("header", "research-intro");
+    intro.append(ASF.el("p", "eyebrow", ui.nav[4].label));
+    intro.append(ASF.el("h1", "page-title", research.title));
+    intro.append(ASF.el("p", "research-author", ui.author));
+    intro.append(ASF.el("p", "research-lead", research.paragraphs[0]));
+    wrap.append(intro);
+
+    /* The project in figures. */
+    let recordings = 0;
+    ASF.content.places.forEach(function (place) {
+      if (place.audio.fr) recordings += 1;
+      if (place.audio.ru) recordings += 1;
+    });
+    const figures = [
+      ["places", ASF.content.places.length],
+      ["languages", 2],
+      ["audio", recordings],
+      ["sources", ASF.content.sources.length]
+    ];
+    const stats = ASF.el("ul", "research-stats");
+    stats.setAttribute("aria-label", research.statsLabel);
+    const counters = [];
+    figures.forEach(function (figure) {
+      const item = ASF.el("li", "research-stat");
+      const number = ASF.el("strong", "research-stat-number", String(figure[1]));
+      number.setAttribute("data-count", String(figure[1]));
+      counters.push(number);
+      item.append(number, ASF.el("span", "research-stat-label", plural(research.stats[figure[0]], figure[1])));
+      stats.append(item);
+    });
+    wrap.append(stats);
+
+    const prose = ASF.el("div", "prose research-text");
+    paragraphs(prose, research.paragraphs.slice(1));
     wrap.append(prose);
 
-    const methods = ASF.el("div", "research-block");
-    methods.append(ASF.el("h2", "", research.methodsTitle));
-    const list = ASF.el("ul", "");
-    research.methods.forEach(function (item) {
-      list.append(ASF.el("li", "", item));
+    /* Timeline of the six places, with photos and links. */
+    const timeline = ASF.el("section", "research-timeline");
+    timeline.setAttribute("aria-labelledby", "timeline-title");
+    const timelineHead = ASF.el("div", "timeline-head");
+    const timelineTitle = ASF.el("h2", "", research.timelineTitle);
+    timelineTitle.id = "timeline-title";
+    const timelineNav = ASF.el("div", "timeline-nav");
+    [["prev", "←"], ["next", "→"]].forEach(function (pair) {
+      const button = ASF.el("button", "timeline-arrow", pair[1]);
+      button.type = "button";
+      button.setAttribute("data-timeline", pair[0]);
+      button.setAttribute("aria-label", pair[0] === "prev" ? research.timelinePrev : research.timelineNext);
+      button.setAttribute("aria-controls", "timeline-track");
+      timelineNav.append(button);
     });
-    methods.append(list);
+    timelineHead.append(timelineTitle, timelineNav);
+    timeline.append(timelineHead, ASF.el("p", "timeline-intro", research.timelineIntro));
+    const track = ASF.el("ol", "timeline-track");
+    track.id = "timeline-track";
+    track.tabIndex = 0;
+    track.setAttribute("aria-labelledby", "timeline-title");
+    ASF.content.timeline.forEach(function (event) {
+      const place = ASF.place(event.place);
+      const item = ASF.el("li", "timeline-item");
+      const link = ASF.el("a", "timeline-card");
+      link.href = "lieu.html?id=" + event.place + (event.anchor ? "#" + event.anchor : "");
+      /* An event can show another photo of the place, e.g. NADES at the museum. */
+      const photoData = event.photo && place && place[event.photo] ? place[event.photo].photo : place && place.photo;
+      const year = ASF.el("span", "timeline-year", event.year);
+      const dot = ASF.el("span", "timeline-dot");
+      dot.setAttribute("aria-hidden", "true");
+      const photo = ASF.el("span", "timeline-photo");
+      if (photoData && photoData.src) {
+        const image = ASF.el("img");
+        image.src = photoData.src;
+        image.alt = "";
+        image.loading = "lazy";
+        if (photoData.position) image.style.objectPosition = photoData.position;
+        photo.append(image);
+      }
+      const text = ASF.el("span", "timeline-text", event[lang]);
+      const open = ASF.el("span", "timeline-open", research.timelineOpen + " →");
+      link.append(year, dot, photo, text, open);
+      item.append(link);
+      track.append(item);
+    });
+    timeline.append(track);
+    wrap.append(timeline);
+
+    /* Methods as numbered steps. */
+    const methods = ASF.el("section", "research-block research-methods");
+    methods.append(ASF.el("h2", "", research.methodsTitle));
+    const steps = ASF.el("ol", "method-steps");
+    research.methods.forEach(function (text, index) {
+      const step = ASF.el("li", "method-step");
+      const number = ASF.el("span", "method-number", String(index + 1));
+      number.setAttribute("aria-hidden", "true");
+      step.append(number, ASF.el("p", "", text));
+      steps.append(step);
+    });
+    methods.append(steps);
     wrap.append(methods);
 
-    const value = ASF.el("div", "research-block");
+    /* What the research produced, with links to it. */
+    const results = ASF.el("section", "research-results");
+    results.append(ASF.el("h2", "", research.resultsTitle));
+    const cards = ASF.el("div", "result-cards");
+    [["places", "lieux.html"], ["map", "carte.html"], ["audio", "audioguide.html"]].forEach(function (pair) {
+      const data = research.results[pair[0]];
+      const card = ASF.el("a", "result-card");
+      card.href = pair[1];
+      const icon = ASF.el("span", "result-icon");
+      icon.innerHTML = researchIcons[pair[0]];
+      card.append(icon, ASF.el("h3", "", data.title), ASF.el("p", "", data.text), ASF.el("span", "result-link", data.link + " →"));
+      cards.append(card);
+    });
+    results.append(cards);
+    wrap.append(results);
+
+    const value = ASF.el("section", "research-value");
     value.append(ASF.el("h2", "", research.valueTitle));
     value.append(ASF.el("p", "", research.value));
     wrap.append(value);
 
-    const sources = ASF.el("div", "sources");
+    /* Sources, filterable by place. */
+    const sources = ASF.el("section", "sources");
     sources.id = "sources";
     sources.append(ASF.el("h2", "", ui.sourcesLink));
+    sources.append(ASF.el("p", "sources-intro", research.sourcesIntro));
+    const filter = ASF.content.places.some(function (place) { return place.id === ASF.sourceFilter; }) ||
+      ASF.sourceFilter === "map" ? ASF.sourceFilter : "all";
+    const groups = [["all", research.sourcesAll]].concat(
+      ASF.content.places.map(function (place) { return [place.id, place.shortName[lang]]; }),
+      [["map", research.sourcesMap]]
+    );
+    const filters = ASF.el("div", "source-filters");
+    filters.setAttribute("role", "group");
+    filters.setAttribute("aria-label", research.sourcesFilterLabel);
+    groups.forEach(function (group) {
+      const count = group[0] === "all"
+        ? ASF.content.sources.length
+        : ASF.content.sources.filter(function (source) { return source.place === group[0]; }).length;
+      if (!count) return;
+      const button = ASF.el("button", "source-filter");
+      button.type = "button";
+      button.setAttribute("data-source-filter", group[0]);
+      button.setAttribute("aria-pressed", group[0] === filter ? "true" : "false");
+      button.append(document.createTextNode(group[1]), ASF.el("span", "source-count", String(count)));
+      filters.append(button);
+    });
+    sources.append(filters);
     const sourceList = ASF.el("ul", "source-list");
+    sourceList.id = "source-list";
+    sourceList.setAttribute("aria-live", "polite");
     ASF.content.sources.forEach(function (source) {
-      const item = ASF.el("li", "");
+      const item = ASF.el("li", "source-item");
+      item.setAttribute("data-place", source.place || "");
+      item.hidden = filter !== "all" && source.place !== filter;
+      const place = ASF.place(source.place);
+      item.append(ASF.el("span", "source-tag", place ? place.shortName[lang] : research.sourcesMap));
       const link = ASF.el("a", "", source.label[lang]);
       link.href = source.href;
       item.append(link);
@@ -382,6 +558,24 @@
     wrap.append(sources);
     section.append(wrap);
     main.append(section);
+    countUp(counters);
+  }
+
+  function filterSources(filter) {
+    ASF.sourceFilter = filter;
+    document.querySelectorAll("[data-source-filter]").forEach(function (button) {
+      button.setAttribute("aria-pressed", button.getAttribute("data-source-filter") === filter ? "true" : "false");
+    });
+    document.querySelectorAll("#source-list .source-item").forEach(function (item) {
+      item.hidden = filter !== "all" && item.getAttribute("data-place") !== filter;
+    });
+  }
+
+  function scrollTimeline(direction) {
+    const track = document.getElementById("timeline-track");
+    if (!track) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    track.scrollBy({ left: direction * track.clientWidth * 0.8, behavior: reduce ? "auto" : "smooth" });
   }
 
   /* Optional "comfort" layers (cafés, water…). Every category starts off;
@@ -589,6 +783,16 @@
       ASF.entryLang[id] = entry.getAttribute("data-entry-lang");
       ASF.focusSelector = '[data-place="' + id + '"][data-entry-lang="' + ASF.entryLang[id] + '"]';
       ASF.render();
+      return;
+    }
+    const sourceFilter = event.target.closest("[data-source-filter]");
+    if (sourceFilter) {
+      filterSources(sourceFilter.getAttribute("data-source-filter"));
+      return;
+    }
+    const timelineArrow = event.target.closest("[data-timeline]");
+    if (timelineArrow) {
+      scrollTimeline(timelineArrow.getAttribute("data-timeline") === "next" ? 1 : -1);
       return;
     }
     const readMore = event.target.closest("[data-read-more]");
