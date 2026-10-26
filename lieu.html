@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Almaty sans frontières / Алматы без границ : mini-guide culturel bilingue (français, russe) de six lieux d’Almaty, avec carte interactive et audioguide. Projet scolaire d’Anastasia Telyuk.">
+  <title>Almaty sans frontières</title>
+  <script>
+    (function () {
+      try {
+        var lang = localStorage.getItem("asf-lang");
+        if (lang === "ru" || lang === "fr") document.documentElement.lang = lang;
+      } catch (error) {}
+    })();
+  </script>
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="lieu">
+  <a class="skip" href="#content">Aller au contenu</a>
+  <header class="site-header" id="site-header"></header>
+  <main id="content"></main>
+  <footer class="site-footer" id="site-footer"></footer>
+  <noscript>Ce mini-guide a besoin de JavaScript pour afficher les textes en français et en russe. Этот мини-гид использует JavaScript, чтобы показывать тексты на французском и русском языках.</noscript>
+  <script src="js/content.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/page.js"></script>
+</body>
+</html>

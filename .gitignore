@@ -1,0 +1,10 @@
+# Claude Code settings for local preview, not part of the site.
+.claude/
+
+# Unfinished edge-tts output (tools/make_audio.py).
+*.part
+
+# System files.
+.DS_Store
+Thumbs.db
+desktop.ini
