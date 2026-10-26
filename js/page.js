@@ -192,27 +192,58 @@
       : ASF.lang();
   }
 
+  /* Rounded down, like the browser's own player shows it. */
+  function formatClock(seconds) {
+    const total = Math.floor(seconds);
+    return Math.floor(total / 60) + ":" + String(total % 60).padStart(2, "0");
+  }
+
+  const headphonesIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="3" y="13" width="5" height="7" rx="2" fill="currentColor"/><rect x="16" y="13" width="5" height="7" rx="2" fill="currentColor"/></svg>';
+
   function renderAudio() {
     const ui = ASF.ui();
+    ASF.audioOpen = ASF.audioOpen || {};
     const main = document.getElementById("content");
     main.replaceChildren();
     const section = ASF.el("section", "section");
     const wrap = ASF.el("div", "wrap");
     wrap.append(ASF.el("h1", "page-title", ui.audioTitle));
+    wrap.append(ASF.el("p", "page-intro", ui.audioIntro));
     const list = ASF.el("div", "audio-list");
 
-    ASF.content.places.forEach(function (place) {
+    ASF.content.places.forEach(function (place, index) {
       const entryLang = entryLanguage(place);
       const story = place.story[entryLang];
+      const number = String(index + 1).padStart(2, "0");
       const article = ASF.el("article", "audio-entry");
       article.id = place.id;
-      article.append(ASF.el("p", "eyebrow", ui.listen));
+
+      /* The place's photo, with its number like a stop on a route. */
+      const figure = ASF.el("figure", "audio-photo");
+      if (place.photo && place.photo.src) {
+        const image = ASF.el("img");
+        image.src = place.photo.src;
+        image.alt = place.photo.alt[ASF.lang()];
+        image.loading = "lazy";
+        if (place.photo.position) image.style.objectPosition = place.photo.position;
+        figure.append(image);
+      }
+      const badge = ASF.el("span", "audio-number", number);
+      badge.setAttribute("aria-hidden", "true");
+      figure.append(badge);
+      article.append(figure);
+
+      const body = ASF.el("div", "audio-body");
+      body.append(ASF.el("p", "eyebrow", place.category[ASF.lang()]));
       const title = ASF.el("h2", "", story.title);
       title.lang = entryLang;
-      article.append(title);
+      body.append(title);
 
+      /* Language choice and recording length on one line. */
+      const meta = ASF.el("div", "audio-meta");
       const chooser = ASF.el("div", "lang-choice");
-      chooser.append(ASF.el("p", "", ui.chooseLang));
+      chooser.setAttribute("role", "group");
+      chooser.setAttribute("aria-label", ui.chooseLang);
       ["fr", "ru"].forEach(function (code) {
         const button = ASF.el("button", "choice", code === "fr" ? "Français" : "Русский");
         button.type = "button";
@@ -222,8 +253,10 @@
         button.setAttribute("aria-pressed", entryLang === code ? "true" : "false");
         chooser.append(button);
       });
-      article.append(chooser);
-      article.append(ASF.el("p", "", entryLang === "ru" ? ui.selectedRu : ui.selectedFr));
+      const duration = ASF.el("span", "audio-duration");
+      duration.hidden = true;
+      meta.append(chooser, duration);
+      body.append(meta);
 
       const file = place.audio[entryLang];
       const pending = ASF.el("p", "pending", ASF.content.ui[entryLang].pendingAudio);
@@ -238,29 +271,64 @@
         player.addEventListener("loadedmetadata", function () {
           player.hidden = false;
           pending.remove();
+          duration.innerHTML = headphonesIcon + '<span class="audio-bars" aria-hidden="true"><i></i><i></i><i></i></span>';
+          duration.append(document.createTextNode(formatClock(player.duration)));
+          duration.setAttribute("aria-label", ui.duration + " " + formatClock(player.duration));
+          duration.hidden = false;
         });
         player.addEventListener("error", function () {
           player.remove();
         });
         player.src = file;
-        /* Only one recording plays at a time. */
+        /* Only one recording plays at a time; the playing card is highlighted. */
         player.addEventListener("play", function () {
           document.querySelectorAll("audio").forEach(function (other) {
             if (other !== player) other.pause();
           });
+          article.classList.add("is-playing");
         });
-        article.append(player, pending);
+        ["pause", "ended"].forEach(function (name) {
+          player.addEventListener(name, function () {
+            article.classList.remove("is-playing");
+          });
+        });
+        body.append(player, pending);
       } else {
-        article.append(pending);
+        body.append(pending);
       }
 
-      const transcript = ASF.el("div", "transcript prose");
+      /* First paragraph as a lead; the rest opens with "read more". */
+      const transcript = ASF.el("div", "transcript");
       transcript.lang = entryLang;
-      const transcriptTitle = ASF.el("h3", "", ui.readText);
-      transcriptTitle.lang = ASF.lang();
-      transcript.append(transcriptTitle);
-      paragraphs(transcript, story.paragraphs);
-      article.append(transcript);
+      transcript.append(ASF.el("p", "audio-lead", story.paragraphs[0]));
+      const more = ASF.el("div", "audio-more");
+      more.id = "more-" + place.id;
+      paragraphs(more, story.paragraphs.slice(1));
+      const open = !!ASF.audioOpen[place.id];
+      more.hidden = !open;
+      transcript.append(more);
+      body.append(transcript);
+
+      const toggle = ASF.el("button", "read-more");
+      toggle.type = "button";
+      toggle.setAttribute("data-read-more", place.id);
+      toggle.setAttribute("aria-controls", more.id);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      toggle.append(ASF.el("span", "read-more-label", open ? ui.readLess : ui.readMore));
+      const chevron = ASF.el("span", "read-more-chevron", "↓");
+      chevron.setAttribute("aria-hidden", "true");
+      toggle.append(chevron);
+      body.append(toggle);
+
+      const links = ASF.el("p", "audio-links");
+      const pageLink = ASF.el("a", "", ui.placePage + " →");
+      pageLink.href = "lieu.html?id=" + place.id;
+      const mapLink = ASF.el("a", "", ui.onMap + " →");
+      mapLink.href = "carte.html?lieu=" + place.id;
+      links.append(pageLink, mapLink);
+      body.append(links);
+
+      article.append(body);
       list.append(article);
     });
 
@@ -521,6 +589,20 @@
       ASF.entryLang[id] = entry.getAttribute("data-entry-lang");
       ASF.focusSelector = '[data-place="' + id + '"][data-entry-lang="' + ASF.entryLang[id] + '"]';
       ASF.render();
+      return;
+    }
+    const readMore = event.target.closest("[data-read-more]");
+    if (readMore) {
+      const id = readMore.getAttribute("data-read-more");
+      const more = document.getElementById("more-" + id);
+      const open = readMore.getAttribute("aria-expanded") !== "true";
+      ASF.audioOpen[id] = open;
+      more.hidden = !open;
+      readMore.setAttribute("aria-expanded", open ? "true" : "false");
+      readMore.querySelector(".read-more-label").textContent = open ? ASF.ui().readLess : ASF.ui().readMore;
+      /* After closing a long text, bring its card back into view. */
+      const card = document.getElementById(id);
+      if (!open && card.getBoundingClientRect().top < 0) card.scrollIntoView({ block: "start" });
     }
   });
 })();
