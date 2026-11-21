@@ -50,6 +50,15 @@ button{font:inherit;color:inherit}
 .vchip.no{color:rgba(245,241,231,.6)}
 .vchip.no .dot{border-style:dashed}
 
+@media (max-width:600px){
+  .brand,.grp-lab{display:none}
+  #bPrint{display:none!important}
+  .toolbar{gap:6px 8px;padding-block:7px}
+  .grp{gap:5px}
+  .tb{height:30px;padding:0 8px;font-size:12px;letter-spacing:.05em}
+  .ind{min-width:52px;font-size:14px}
+}
+
 /* ---------- stage ---------- */
 .stage{flex:1;min-height:0;position:relative;display:grid;justify-content:safe center;align-content:safe center;overflow:hidden;padding-block:18px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));touch-action:pan-y pinch-zoom}
 .stage.zoomed{overflow:auto;touch-action:auto}
@@ -202,7 +211,7 @@ body.immersive .stage{padding-top:calc(58px + env(safe-area-inset-top,0px));padd
 .toc h2{margin:0 0 4px;display:flex;justify-content:space-between;align-items:baseline;font:900 28px/1 var(--display);text-transform:uppercase}
 .toc h2 span{font:600 13px/1 var(--display);letter-spacing:.14em;color:var(--ink-soft);text-transform:none}
 .toc ol{list-style:none;margin:0;padding:0}
-.toc a{display:grid;grid-template-columns:76px minmax(0,1fr) 40px;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(32,45,62,.25);text-decoration:none;color:var(--navy);transition:padding .2s}
+.toc a{display:grid;grid-template-columns:76px minmax(0,1fr) 40px;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid rgba(32,45,62,.25);text-decoration:none;color:var(--navy);transition:padding .2s}
 .toc a:hover{padding-left:10px}
 .toc .no{font:900 italic 46px/.9 var(--display);color:var(--c)}
 .toc .tt{font:800 23px/1.05 var(--display);text-transform:uppercase}
@@ -411,10 +420,10 @@ const T=[
  {n:14,fr:'La souplesse',fi:'/la su.plɛs/',kk:'Икемділік',ki:'/ɪj.kem.dɪ.ˈlɪk/',en:'Flexibility',ei:'/ˌflek.səˈbɪl.ə.ti/',ex:'La gymnastique développe la souplesse.',art:'flex',alt:'Gymnaste en grand écart sauté avec un ruban'},
  {n:15,fr:'L’échauffement',fi:'/le.ʃof.mɑ̃/',kk:'Дене қыздыру',ki:'/de.ˈne qəz.də.ˈrʊw/',en:'Warm-up',ei:'/ˈwɔːm.ʌp/',ex:'L’échauffement est important avant le match.',art:'warm',alt:'Deux sportifs qui s’étirent entre des plots'},
  {n:16,fr:'L’esprit d’équipe',fi:'/lɛs.pʁi de.kip/',kk:'Командалық рух',ki:'/ko.mɑn.dɑ.ˈləq rʊwχ/',en:'Team spirit',ei:'/ˌtiːm ˈspɪr.ɪt/',ex:'L’esprit d’équipe est essentiel dans le sport.',art:'spirit',alt:'Une équipe en cercle, mains réunies au centre, vue de dessus'},
- {n:17,fr:'Le kokpar',fi:null,kk:'Көкпар',ki:'/køk.ˈpɑr/',en:'Kokpar',ei:null,ex:'Le kokpar est un sport équestre traditionnel du Kazakhstan.',fact:'Le kokpar est un jeu collectif pratiqué à cheval.',art:'kokpar',alt:'Cavaliers en pleine action dans la steppe kazakhe'},
+ {n:17,fr:'Le kokpar',fi:'/lə køk.ˈpɑr/',kk:'Көкпар',ki:'/køk.ˈpɑr/',en:'Kokpar',ei:'/køk.ˈpɑr/',ex:'Le kokpar est un sport équestre traditionnel du Kazakhstan.',fact:'Le kokpar est un jeu collectif pratiqué à cheval.',art:'kokpar',alt:'Cavaliers en pleine action dans la steppe kazakhe'},
  {n:18,fr:'La lutte traditionnelle kazakhe',fi:'/la lyt tʁa.di.sjɔ.nɛl ka.zak/',kk:'Қазақ күресі',ki:'/qɑ.ˈzɑq kʏ.re.ˈsɪ/',en:'Traditional Kazakh wrestling',ei:'/trəˈdɪʃ.ən.əl ˈkæz.æk ˈres.lɪŋ/',ex:'La lutte traditionnelle kazakhe demande de la force et de la technique.',fact:'Cette forme de lutte fait partie du patrimoine culturel du Kazakhstan.',art:'kures',alt:'Deux lutteurs en veste et ceinture qui s’empoignent'},
- {n:19,fr:'Le baïgé',frg:'une course de chevaux traditionnelle',fi:null,kk:'Бәйге',ki:'/bæj.ˈɡe/',en:'Baige',eng:'traditional horse racing',ei:null,ex:'Le baïgé est une course de chevaux très populaire au Kazakhstan.',fact:'Les chevaux participent souvent à des courses sur de longues distances.',art:'baige',alt:'Chevaux et jeunes cavaliers au galop dans la steppe'},
- {n:20,fr:'Le togyzkumalak',fi:null,kk:'Тоғызқұмалақ',ki:'/to.ʁəz.qʊ.mɑ.ˈlɑq/',en:'Togyzkumalak',ei:null,ex:'Le togyzkumalak est un jeu de stratégie traditionnel.',fact:'Les joueurs utilisent un plateau et des petites billes. Ce jeu demande de la logique et de la concentration.',art:'togyz',alt:'Plateau de togyzkumalak : deux rangées de neuf trous, deux réserves et des billes'}
+ {n:19,fr:'Le baïgé',frg:'une course de chevaux traditionnelle',fi:'/lə bæj.ˈɡe/',kk:'Бәйге',ki:'/bæj.ˈɡe/',en:'Baige',eng:'traditional horse racing',ei:'/bæj.ˈɡe/',ex:'Le baïgé est une course de chevaux très populaire au Kazakhstan.',fact:'Les chevaux participent souvent à des courses sur de longues distances.',art:'baige',alt:'Chevaux et jeunes cavaliers au galop dans la steppe'},
+ {n:20,fr:'Le togyzkumalak',fi:'/lə to.ʁəz.qʊ.mɑ.ˈlɑq/',kk:'Тоғызқұмалақ',ki:'/to.ʁəz.qʊ.mɑ.ˈlɑq/',en:'Togyzkumalak',ei:'/to.ʁəz.qʊ.mɑ.ˈlɑq/',ex:'Le togyzkumalak est un jeu de stratégie traditionnel.',fact:'Les joueurs utilisent un plateau et des petites billes. Ce jeu demande de la logique et de la concentration.',art:'togyz',alt:'Plateau de togyzkumalak : deux rangées de neuf trous, deux réserves et des billes'}
 ];
 /* Quiz in three languages. q / o = French (the original), kk / en = translations.
    Options stay in the target language when the question asks for a translation. */
@@ -785,10 +794,10 @@ function termHTML(t,flip){
   <div class="t-body">
     <div class="t-kick"><span class="t-num">${pad(t.n)}</span><span class="t-tag">Français</span></div>
     <div class="t-headrow"><h3 class="t-fr" lang="fr">${t.fr}${t.frg?`<span class="t-gloss">— ${t.frg}</span>`:''}</h3>${pb('fr-'+t.n,'fr',frLabel,sayFr(frLabel),'lg')}</div>
-    <p class="t-ipa">${t.fi?t.fi:'<span class="loan">Nom emprunté au kazakh : pas de prononciation française établie. Prononciation d’origine ci-dessous.</span>'}</p>
+    ${t.fi?`<p class="t-ipa">${t.fi}</p>`:''}
     <div class="t-rows">
       <div class="t-row"><span class="t-lab">Қазақша</span><span class="t-wbox"><span class="t-w" lang="kk">${t.kk}</span><span class="ipa">${t.ki}</span></span>${pb('kk-'+t.n,'kk',t.kk,t.kk)}</div>
-      <div class="t-row"><span class="t-lab">English</span><span class="t-wbox"><span class="t-w" lang="en">${enLabel}</span><span class="ipa">${t.ei?t.ei:'<span class="loan">Borrowed from Kazakh; no set English pronunciation.</span>'}</span></span>${pb('en-'+t.n,'en',enLabel,enLabel.replace(' — ',', '))}</div>
+      <div class="t-row"><span class="t-lab">English</span><span class="t-wbox"><span class="t-w" lang="en">${enLabel}</span>${t.ei?`<span class="ipa">${t.ei}</span>`:''}</span>${pb('en-'+t.n,'en',enLabel,enLabel.replace(' — ',', '))}</div>
     </div>
     <div class="t-ex"><span class="t-exlab">Exemple</span><p lang="fr">${frT(t.ex)}</p>${pb('ex-'+t.n,'fr','exemple '+pad(t.n),sayFr(t.say||t.ex))}</div>
     ${t.fact?`<aside class="t-fact"><b>Le saviez-vous${' '}?</b>${t.fact}</aside>`:''}
@@ -815,13 +824,13 @@ function pageCover(){
   return `<section class="page p1 odd cover" data-n="1" id="page-1" aria-label="Couverture">
    <div class="cv-art">${coverSVG()}</div>
    <div class="cv-head">
-     <div class="cv-meta"><span>Dictionnaire trilingue</span><span>Қазақша · Français · English</span></div>
+     <div class="cv-meta"><span>Dictionnaire trilingue</span><span>7ᵉ–11ᵉ classes · étudiants</span></div>
      <h1 class="cv-title"><span>Les mots</span><span>en mouvement</span></h1>
      <p class="cv-sub">Dictionnaire illustré du sport</p>
      <p class="cv-langs">Қазақша · Français · English</p>
    </div>
    <div class="cv-tag">20 termes · 3 langues · 5 chapitres</div>
-   <div class="cv-foot"><b>ÉDITION 2026</b><span>Les mots en mouvement<br>Dictionnaire illustré du sport</span></div>
+   <div class="cv-foot"><b>ÉDITION 2026</b><span>Concours<br>« Вызов трёх языков »</span></div>
   </section>`;}
 
 function pageIntro(){
@@ -910,7 +919,7 @@ function pageSources(){
      <h3>Note de méthode</h3>
      <p><b>Transcriptions.</b> Le français suit la notation de l’API utilisée par Le Robert ; l’anglais suit la prononciation britannique du Cambridge Dictionary. Le kazakh est donné en transcription phonologique large, avec l’accent sur la dernière syllabe du mot et l’harmonie vocalique ; ce n’est pas une transcription russe.</p>
      <p><b>Mots empruntés.</b> Kokpar, baïgé et togyzkumalak sont des noms kazakhs. Le français et l’anglais n’ont pas de prononciation établie pour ces mots : le livre donne la prononciation kazakhe d’origine.</p>
-     <p><b>Audio.</b> Les 80 enregistrements (20 mots en français, en kazakh et en anglais, et 20 exemples en français) sont produits par synthèse vocale neuronale Microsoft : voix Denise (fr-FR), Aigul (kk-KZ) et Sonia (en-GB). Chaque fichier peut être remplacé par l’enregistrement d’un locuteur. Si un fichier manque, le livre utilise la voix du navigateur (Web Speech API) ; l’audio kazakh n’est jamais lu par une voix russe.</p>
+     <p><b>Audio.</b> Les 80 enregistrements (20 mots en français, en kazakh et en anglais, et 20 exemples en français) sont produits par synthèse vocale neuronale Microsoft : voix Denise (fr-FR), Aigul (kk-KZ) et Sonia (en-GB). Ils sont intégrés au livre, en vitesse normale et en version ralentie. Si un enregistrement ne peut pas être lu, le livre utilise la voix du navigateur (Web Speech API) ; l’audio kazakh n’est jamais lu par une voix russe.</p>
      <p><b>Illustrations.</b> Dessins originaux réalisés en SVG pour cette édition. Ornement du chapitre 05 inspiré du motif kazakh « қошқар мүйіз » (corne de bélier).</p>
      <p><b>Typographie.</b> Fira Sans Extra Condensed, Noto Serif, Gentium Book Plus (SIL Open Font License).</p>
     </div>
@@ -951,6 +960,7 @@ function render(dir){
   document.getElementById('zPrev').disabled=first;document.getElementById('zNext').disabled=last;
   document.getElementById('bPrev').style.visibility=first?'hidden':'';
   document.getElementById('bNext').style.visibility=last?'hidden':'';
+  document.getElementById('fsPrev').hidden=first;document.getElementById('fsNext').hidden=last;
   const bz=document.getElementById('bZoom');bz.hidden=twoUp;
   if(twoUp&&zoom){zoom=false;bz.setAttribute('aria-pressed','false');stage.classList.remove('zoomed');fit();}
 }
@@ -1021,7 +1031,7 @@ function updateVoiceUI(){
   document.querySelectorAll('.vchip').forEach(b=>{const l=b.dataset.l,v=A.voices[l];
     b.classList.remove('ok','alt','no');b.classList.add(hasFiles(l)?'ok':(v?(A.exact[l]?'ok':'alt'):'no'));
     b.title=hasFiles(l)?`${LANGS[l].code} : enregistrements intégrés`:(v?`${LANGS[l].code} : ${v.name} (${v.lang})`:`${LANGS[l].code} : aucune voix`);});
-  document.querySelectorAll('.play[data-lang="kk"]').forEach(b=>{b.classList.toggle('novoice',!A.voices.kk&&!AUDIO_FILES[b.dataset.k]);});
+  document.querySelectorAll('.play[data-lang="kk"]').forEach(b=>{b.classList.toggle('novoice',!A.voices.kk&&!AUDIO_FILES[b.dataset.k]&&!AUDIO_DATA[b.dataset.k]);});
 }
 document.getElementById('voices')?.addEventListener('click',e=>{const b=e.target.closest('.vchip');if(!b)return;const l=b.dataset.l,v=A.voices[l];
   if(hasFiles(l)){toast(`${LANGS[l].name} : 20 enregistrements intégrés · voix ${AUDIO_VOICES[l]}${l==='fr'?' · + 20 exemples':''}.`);return;}
